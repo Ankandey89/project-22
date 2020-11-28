@@ -4,6 +4,7 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
+var leftsprite,rightsprite,bottomsprite;
 
 function preload()
 {
@@ -14,6 +15,26 @@ function preload()
 function setup() {
 	createCanvas(800, 700);
 	rectMode(CENTER);
+	engine=Engine.create();
+	world=engine.world
+
+	leftsprite=createSprite(width/2-100,600,20,100);
+	leftsprite.shapeColor="red";
+
+	rightsprite=createSprite(width/2+100,600,20,100);
+	rightsprite.shapeColor="red";
+
+	bottomsprite=createSprite(width/2,650,200,20);
+	bottomsprite.shapeColor="red";
+
+	boxLeftBody=Bodies.rectangle(width/2+20,600,20,100,{isStatic:true});
+	World.add(world,boxLeftBody)
+
+	boxRightBody=Bodies.rectangle(width/2+100,600,20,100,{isStatic:true});
+	World.add(world,boxRightBody)
+
+	boxBottomBody=Bodies.rectangle(width/2+50,650,200,20,{isStatic:true});
+	World.add(world,boxBottomBody)
 	
 
 	packageSprite=createSprite(width/2, 80, 10,10);
@@ -41,7 +62,7 @@ function setup() {
 
 
 	Engine.run(engine);
-  
+	  
 }
 
 
@@ -59,8 +80,27 @@ function keyPressed() {
 	// Look at the hints in the document and understand how to make the package body fall only on press of the Down arrow key.
 	Matter.Body.setStatic(packageBody,false);
 
-    
+	    
   }
+  if((keyCode === LEFT_ARROW)){
+	  helicopterSprite.x=helicopterSprite.x-20;
+	  translation={
+		  x:-20,y:0
+	  }
+	  Matter.Body.translate(packageBody,translation);
+		  
+	  
+  }
+  if((keyCode === RIGHT_ARROW)){
+	helicopterSprite.x=helicopterSprite.x+20;
+	translation={
+		x:+20,y:0
+	}
+	Matter.Body.translate(packageBody,translation);
+		
+	
+}
+
 }
 
 
